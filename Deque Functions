@@ -1,0 +1,63 @@
+Deque Functions
+Push
+
+Starting Phase
+Starts out with head and tail both pointing at the first place in the circular buffer
+If push_back
+	move the tail to that place
+Else push_front
+	move the head to that point
+
+Other times
+Each ptr can be in any place in the array
+If push_back
+	move the tail to the right
+	if tail == head
+		realloc and continue
+	if tail == capacity
+		circle around to the beginning
+Else push_front
+	if head == tail
+		realloc and continue
+	if head == 0
+		circle around to the beginning
+	else
+		move head to the left
+		add thing to this place
+
+Pop_back
+Check if the circular buffer is empty
+ if empty exit the function
+ else
+ 	set value = NULL
+
+
+ push_back                  *
+ push_front                 *
+ pop_back                   *
+ pop_front                  *
+ .size                      *
+ .empty                     *
+ .clear
+ .begin                     *
+ .end                       *
+ front_index                *
+ back_index                 *
+ reallocate_array           *
+ Deque_Iterator_Equal       *
+ Deque_Equal                *
+ .front                     *
+ .back                      *
+ .at                        *
+ inc                        *
+ dec                        *
+ deref                      *
+ ctor
+ dtor
+
+Things to do still
+rewrite using iterators
+valgrind
+test everything
+chiu
+chaoren test
