@@ -33,9 +33,60 @@ namespace cs540{
 			std::size_t size;
 
 		public:
-			class Iterator{};
-			class ConstIterator{};
-			class ReverseIterator{};
+			class Iterator{
+				public:
+					Iterator(const Iterator&);
+					Iterator& operator=(const Iterator&);
+					Iterator(Iterator&&);
+					Iterator& operator=(Iterator&&);
+					~Iterator();
+					Iterator& operator++();
+					Iterator operator++(int);
+					Iterator& operator--();
+					Iterator operator--(int)
+					std::pair<const Key, Value>& operator*() const;
+
+					bool operator==(const Iterator&, const Iterator&);
+					bool operator!=(const Iterator&, const Iterator&);
+				private:
+					Node* current;
+					friend class Map;
+			};
+			class ConstIterator{
+			public:
+				ConstIterator(const ConstIterator&);
+				ConstIterator& operator=(const ConstIterator&);
+				ConstIterator(ConstIterator&&);
+				ConstIterator& operator=(ConstIterator&&);
+				~ConstIterator();
+				ConstIterator(const Iterator&);
+				ConstIterator& operator++();
+				ConstIterator operator++(int);
+				ConstIterator& operator--();
+				ConstIterator operator--(int);
+				const std::pair<const Key, Value>& operator*() const;
+
+				bool operator==(const ConstIterator&, const ConstIterator&);
+				bool operator!=(const ConstIterator&, const ConstIterator&);
+			private:
+				Node* current;
+				friend class Map;
+			};
+			class ReverseIterator{
+				ReverseIterator(const ReverseIterator&);
+				ReverseIterator& operator=(const ReverseIterator&);
+				ReverseIterator(ReverseIterator&&);
+				ReverseIterator& operator=(ReverseIterator&&);
+				~ReverseIterator();
+				ReverseIterator& operator++();
+				ReverseIterator operator++(int);
+				ReverseIterator& operator--();
+				ReverseIterator operator--(int);
+				const std::pair<const Key, Value>& operator*() const;
+
+				bool operator==(const ReverseIterator&, const ReverseIterator&);
+				bool operator!=(const ReverseIterator&, const ReverseIterator&);
+			};
 			/*---Constructors---*/
 			Map(); //Default Constructor
 			Map(const &Map); //Copy Constructor
