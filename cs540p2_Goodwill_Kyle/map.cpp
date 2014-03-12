@@ -31,7 +31,7 @@ namespace cs540{
 					Node* next; //DLL Next
 
 					Node() : prev(nullptr), next(nullptr) {}
-					Node(std::pair<const Key, Value> n_value_in, Node* parentIn) : n_value(new std::pair<const Key, Value>(n_value_in)), left(nullptr), right(nullptr), parent(nullptr), prev(nullptr), next(nullptr) {}
+					Node(std::pair<const Key, Value> n_value_in, Node* parentIn) : n_value(new std::pair<const Key, Value>(n_value_in)), left(nullptr), right(nullptr), parent(nullptr), prev(nullptr), next(nullptr){}
 					Key key();
 					Value value();
 					Node *get_before();
@@ -183,7 +183,7 @@ cs540::Map<Key, Value>::Map(const Map& map2) : Map(){
  *Creates a deep copy using the overloaded assignment operator
  */
 template <typename Key, typename Value>
-cs540::Map<Key, Value>::Map& operator=(const Map& map2){
+typename cs540::Map<Key, Value>::Map& cs540::Map<Key,Value>::operator=(const Map& map2){
 	//Calls the copy constructor for Map
 }
 
@@ -198,7 +198,7 @@ cs540::Map<Key, Value>::Map(Map&& map2){
 
 //Move Assignment
 template <typename Key, typename Value>
-cs540::Map<Key, Value>::Map& operator=(Map&& map2){
+typename cs540::Map<Key, Value>::Map& cs540::Map<Key, Value>::operator=(Map&& map2){
 	//Calls the move constructor
 }
 
@@ -213,7 +213,7 @@ cs540::Map<Key, Value>::Map(std::initializer_list<std::pair<const Key, Value>> n
 //Destructor
 template <typename Key, typename Value>
 cs540::Map<Key, Value>::~Map(){
-	if(head){clear(head);}
+	if(head) clear(head);
 	delete tail;
 }
 
@@ -247,4 +247,8 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const s
 		m_size++;
 	}
 	return Map<Key, Value>::Iterator(head);
+}
+
+int main{
+	return 0;
 }
