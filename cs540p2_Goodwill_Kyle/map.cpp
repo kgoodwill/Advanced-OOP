@@ -175,7 +175,20 @@ cs540::Map<Key, Value>::Map(const Map& map2) : Map(){
 	//Finds all of the nodes in it and creates copies of them
 	//	Calls the node copy constructor, which should maintain all Node* ptrs
 	//Why is this not implemented????
-	for(auto& i : map2) insert(i);
+	//for(auto& i : map2) insert(i);
+	auto i = map2.begin();
+	auto j = map2.end();
+	while(i != j){
+		insert(*i);
+		i++;
+		if(i != j){
+			j--;
+			insert(*j);
+		}
+	}
+	if(i != map2.end()){
+		insert(*i);
+	}
 }
 
 /*Copy Assignment
@@ -184,7 +197,24 @@ cs540::Map<Key, Value>::Map(const Map& map2) : Map(){
  */
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Map& cs540::Map<Key,Value>::operator=(const Map& map2){
-	//Calls the copy constructor for Map
+	if(*this == map2){
+		return *this;
+	}
+	this->clear();
+	auto i = map2.begin();
+	auto j = map2.end();
+	while(i != j){
+		insert(*i);
+		i++;
+		if(i != j){
+			j--;
+			insert(*j);
+		}
+	}
+	if(i != map2.end()){
+		insert(*i);
+	}
+	return *this;
 }
 
 /*Move Constructor
@@ -193,28 +223,41 @@ typename cs540::Map<Key, Value>::Map& cs540::Map<Key,Value>::operator=(const Map
  */
 template <typename Key, typename Value>
 cs540::Map<Key, Value>::Map(Map&& map2){
-
+	head = map2.head;
+	tail = map2.tail;
+	m_size = map2.m_size;
+	map2.root = nullptr;
+	map2.tail = nullptr;
+	map2.m_size = 0;
 }
 
 //Move Assignment
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Map& cs540::Map<Key, Value>::operator=(Map&& map2){
-	//Calls the move constructor
+	if(*this == *map2){
+		return *this;
+	}
+	this->clear();
+	this->m_size = map2.size();
+	(this->head) = map2.head;
+	(this->tail) = map2.tail;
+	map2.head = nullptr;
+	map2.tail = nullptr;
+	map2.m_size = 0;
+	return *this;
 }
 
 //Initializer List Constructor
 template <typename Key, typename Value>
 cs540::Map<Key, Value>::Map(std::initializer_list<std::pair<const Key, Value>> n_value_in){
-	head = nullptr;
-	tail = new Map<Key, Value>::Node();
 	for(auto i : n_value_in) insert(i);
 }
 
 //Destructor
 template <typename Key, typename Value>
 cs540::Map<Key, Value>::~Map(){
-	if(head) clear(head);
-	delete tail;
+	clear();
+	if(tail) delete tail;
 }
 
 //Insert
@@ -222,15 +265,18 @@ cs540::Map<Key, Value>::~Map(){
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&& n_value_in){
 	if(head){
-		return this->insert(n_value_in, head);
+		Node* newNode = new Node(n_value_in, nullptr);
+		return this->insert(head, n_value_in);
 	}
 	else{
 		head = new Node(n_value_in, nullptr);
 		head->next = tail;
+		head->prev = tail;
+		tail->next = head;
 		tail->prev = head;
 		m_size++;
+		return Map<Key, Value>::Iterator(head);
 	}
-	return Map<Key, Value>::Iterator(head);
 }
 
 //Constant Insert
@@ -238,17 +284,59 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pa
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const std::pair<const Key, Value>& n_value_in){
 	if(head){
-		return this->insert(n_value_in, head);
+		Node* newNode = new Node(n_value_in, nullptr);
+		return this->insert(head, newNode);
 	}
 	else{
 		head = new Node(n_value_in, nullptr);
 		head->next = tail;
+		head->prev = tail;
 		tail->prev = head;
+		tail->next = head;
 		m_size++;
+		return Map<Key, Value>::Iterator(head);
 	}
-	return Map<Key, Value>::Iterator(head);
 }
 
-int main{
-	return 0;
+template<typename Key, typename Value>
+void cs540::Map<Key, Value>::erase(Map<Key, Value>::Iterator iter){
+	//Erases the data in the map at location specified by the iterator
+	//Remove data from the LL
+	//Remove data from the BST
+}
+
+template<typename Key, typename Value>
+void cs540::Map<Key, Value>::remove(const Key& removeKey){
+	//Removes the data in the map associated with the given key
+}
+
+template<typename Key, typename Value>
+void cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key& searchKey){
+	//Returns an iterator to the location matching the search key
+}
+
+template<typename Key, typename Value>
+void cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(const Key& searchKey){
+	//Does the same thing as regular iterator find but with a const iterator
+}
+
+template<typename Key, typename Value>
+void cs540::Map<Key, Value>::clear(){
+	//Resets all values of the map to default values
+}
+
+template<typename Key, typename Value>
+Value& cs540::Map<Key, Value>::at(const Key& searchKey){
+	//Returns a pointer to the value at the specified search key
+}
+
+template<typename Key, typename Value>
+const Value& cs540::Map<Key, Value>::at(const Key& searchKey) const{
+	//Does the same thing as the non-const version
+}
+
+
+
+int main(){
+	std::cout << "" << std::endl;
 }
