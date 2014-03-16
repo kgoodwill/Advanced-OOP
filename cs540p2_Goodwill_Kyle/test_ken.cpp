@@ -1,9 +1,3 @@
-un with
- *
- *    -i iterations
- *
- * to do a stress test for the given number of iterations.
- */
 
 #include <stdio.h>
 #include <unistd.h>

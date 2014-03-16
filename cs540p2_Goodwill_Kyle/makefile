@@ -1,9 +1,6 @@
 CPPFLAGS = -g -Wall -Wextra -pedantic -std=c++11
 
-all: ryan ken chaoren minimal morse
-
-ryan:
-	g++ $(CPPFLAGS) test_ryan.cpp -o test_ryan.exe
+all: ken chaoren minimal morse
 
 ken:
 	g++ $(CPPFLAGS) test_ken.cpp -o test_ken.exe
