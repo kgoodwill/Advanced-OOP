@@ -783,7 +783,3 @@ typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::getAfter(){
 		return nullptr;
 	}
 }
-
-int main(){
-	std::cout << "" << std::endl;
-}
