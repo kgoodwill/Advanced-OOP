@@ -1,0 +1,117 @@
+g++ -g -Wall -Wextra -pedantic -std=c++0x general_test.cpp -o general.exe
+general_test.cpp:15:26: sorry, unimplemented: non-static data member initializers
+general_test.cpp:15:26: error: ISO C++ forbids in-class initialization of non-const static member ‘was_moved’
+In file included from general_test.cpp:1:0:
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&&) [with Key = int, Value = MyMovable]’:
+general_test.cpp:30:37:   instantiated from here
+map.hpp:275:9: warning: unused variable ‘newNode’ [-Wunused-variable]
+general_test.cpp:30:37:   instantiated from here
+map.hpp:287:2: error: return-statement with no value, in function returning ‘cs540::Map<int, MyMovable>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&&) [with Key = int, Value = int]’:
+general_test.cpp:43:24:   instantiated from here
+map.hpp:275:9: warning: unused variable ‘newNode’ [-Wunused-variable]
+general_test.cpp:43:24:   instantiated from here
+map.hpp:287:2: error: return-statement with no value, in function returning ‘cs540::Map<int, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘void cs540::Map<Key, Value>::erase(cs540::Map<Key, Value>::Iterator) [with Key = int, Value = int]’:
+general_test.cpp:55:21:   instantiated from here
+map.hpp:323:3: error: base operand of ‘->’ has non-pointer type ‘cs540::Map<int, int>::Iterator’
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&&) [with Key = int, Value = long int]’:
+general_test.cpp:63:22:   instantiated from here
+map.hpp:275:9: warning: unused variable ‘newNode’ [-Wunused-variable]
+general_test.cpp:63:22:   instantiated from here
+map.hpp:287:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&) [with Key = int, Value = long int]’:
+general_test.cpp:80:25:   instantiated from here
+map.hpp:364:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ReverseIterator cs540::Map<Key, Value>::rbegin() [with Key = std::basic_string<char>, Value = int]’:
+general_test.cpp:115:42:   instantiated from here
+map.hpp:490:52: error: no matching function for call to ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator::ReverseIterator(cs540::Map<std::basic_string<char>, int>::Node*&)’
+map.hpp:490:52: note: candidates are:
+map.hpp:93:5: note: cs540::Map<Key, Value>::ReverseIterator::ReverseIterator(cs540::Map<Key, Value>::ReverseIterator&&) [with Key = std::basic_string<char>, Value = int, cs540::Map<Key, Value>::ReverseIterator = cs540::Map<std::basic_string<char>, int>::ReverseIterator]
+map.hpp:93:5: note:   no known conversion for argument 1 from ‘cs540::Map<std::basic_string<char>, int>::Node*’ to ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator&&’
+map.hpp:91:5: note: cs540::Map<Key, Value>::ReverseIterator::ReverseIterator(const cs540::Map<Key, Value>::ReverseIterator&) [with Key = std::basic_string<char>, Value = int, cs540::Map<Key, Value>::ReverseIterator = cs540::Map<std::basic_string<char>, int>::ReverseIterator]
+map.hpp:91:5: note:   no known conversion for argument 1 from ‘cs540::Map<std::basic_string<char>, int>::Node*’ to ‘const cs540::Map<std::basic_string<char>, int>::ReverseIterator&’
+map.hpp:491:2: error: return-statement with no value, in function returning ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ReverseIterator cs540::Map<Key, Value>::rend() [with Key = std::basic_string<char>, Value = int]’:
+general_test.cpp:116:39:   instantiated from here
+map.hpp:497:46: error: no matching function for call to ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator::ReverseIterator(cs540::Map<std::basic_string<char>, int>::Node*&)’
+map.hpp:497:46: note: candidates are:
+map.hpp:93:5: note: cs540::Map<Key, Value>::ReverseIterator::ReverseIterator(cs540::Map<Key, Value>::ReverseIterator&&) [with Key = std::basic_string<char>, Value = int, cs540::Map<Key, Value>::ReverseIterator = cs540::Map<std::basic_string<char>, int>::ReverseIterator]
+map.hpp:93:5: note:   no known conversion for argument 1 from ‘cs540::Map<std::basic_string<char>, int>::Node*’ to ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator&&’
+map.hpp:91:5: note: cs540::Map<Key, Value>::ReverseIterator::ReverseIterator(const cs540::Map<Key, Value>::ReverseIterator&) [with Key = std::basic_string<char>, Value = int, cs540::Map<Key, Value>::ReverseIterator = cs540::Map<std::basic_string<char>, int>::ReverseIterator]
+map.hpp:91:5: note:   no known conversion for argument 1 from ‘cs540::Map<std::basic_string<char>, int>::Node*’ to ‘const cs540::Map<std::basic_string<char>, int>::ReverseIterator&’
+map.hpp:498:2: error: return-statement with no value, in function returning ‘cs540::Map<std::basic_string<char>, int>::ReverseIterator’ [-fpermissive]
+map.hpp: In constructor ‘cs540::Map<Key, Value>::Map(cs540::Map<Key, Value>&&) [with Key = int, Value = int, cs540::Map<Key, Value> = cs540::Map<int, int>]’:
+general_test.cpp:130:12:   instantiated from here
+map.hpp:236:2: error: ‘class cs540::Map<int, int>’ has no member named ‘root’
+map.hpp: In copy constructor ‘cs540::Map<Key, Value>::Map(const cs540::Map<Key, Value>&) [with Key = int, Value = double, cs540::Map<Key, Value> = cs540::Map<int, double>]’:
+general_test.cpp:152:56:   instantiated from here
+map.hpp:180:52: error: type ‘cs540::Map<int, double>’ is not a direct base of ‘cs540::Map<int, double>’
+map.hpp: In constructor ‘cs540::Map<Key, Value>::Map(cs540::Map<Key, Value>&&) [with Key = int, Value = double, cs540::Map<Key, Value> = cs540::Map<int, double>]’:
+general_test.cpp:155:68:   instantiated from here
+map.hpp:236:2: error: ‘class cs540::Map<int, double>’ has no member named ‘root’
+map.hpp: In member function ‘cs540::Map<Key, Value>& cs540::Map<Key, Value>::operator=(cs540::Map<Key, Value>&&) [with Key = int, Value = double, cs540::Map<Key, Value> = cs540::Map<int, double>]’:
+general_test.cpp:161:44:   instantiated from here
+map.hpp:244:2: error: no match for ‘operator*’ in ‘*map2’
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::begin() [with Key = int, Value = int]’:
+/usr/include/c++/4.6/bits/range_access.h:49:27:   instantiated from ‘decltype (__cont.begin()) std::begin(_Container&) [with _Container = cs540::Map<int, int>, decltype (__cont.begin()) = cs540::Map<int, int>::Iterator]’
+general_test.cpp:50:33:   instantiated from here
+map.hpp:463:2: error: return-statement with no value, in function returning ‘cs540::Map<int, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(const Key&) const [with Key = int, Value = long int]’:
+map.hpp:406:28:   instantiated from ‘const Value& cs540::Map<Key, Value>::at(const Key&) const [with Key = int, Value = long int]’
+general_test.cpp:78:16:   instantiated from here
+map.hpp:376:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::ConstIterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&, cs540::Map<Key, Value>::Node*) [with Key = int, Value = long int]’:
+map.hpp:362:30:   instantiated from ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&) [with Key = int, Value = long int]’
+general_test.cpp:80:25:   instantiated from here
+map.hpp:549:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::end() [with Key = int, Value = long int]’:
+/usr/include/c++/4.6/bits/range_access.h:69:25:   instantiated from ‘decltype (__cont.end()) std::end(_Container&) [with _Container = cs540::Map<int, long int>, decltype (__cont.end()) = cs540::Map<int, long int>::Iterator]’
+general_test.cpp:84:5:   instantiated from here
+map.hpp:470:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘void cs540::Map<Key, Value>::erase(cs540::Map<Key, Value>::Iterator) [with Key = int, Value = long int]’:
+map.hpp:351:3:   instantiated from ‘void cs540::Map<Key, Value>::remove(const Key&) [with Key = int, Value = long int]’
+general_test.cpp:88:16:   instantiated from here
+map.hpp:323:3: error: base operand of ‘->’ has non-pointer type ‘cs540::Map<int, long int>::Iterator’
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&&) [with Key = std::basic_string<char>, Value = int]’:
+map.hpp:418:30:   instantiated from ‘Value& cs540::Map<Key, Value>::operator[](const Key&) [with Key = std::basic_string<char>, Value = int]’
+general_test.cpp:105:25:   instantiated from here
+map.hpp:275:9: warning: unused variable ‘newNode’ [-Wunused-variable]
+map.hpp:418:30:   instantiated from ‘Value& cs540::Map<Key, Value>::operator[](const Key&) [with Key = std::basic_string<char>, Value = int]’
+general_test.cpp:105:25:   instantiated from here
+map.hpp:287:2: error: return-statement with no value, in function returning ‘cs540::Map<std::basic_string<char>, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::begin() [with Key = std::basic_string<char>, Value = int]’:
+/usr/include/c++/4.6/bits/range_access.h:49:27:   instantiated from ‘decltype (__cont.begin()) std::begin(_Container&) [with _Container = cs540::Map<std::basic_string<char>, int>, decltype (__cont.begin()) = cs540::Map<std::basic_string<char>, int>::Iterator]’
+general_test.cpp:110:24:   instantiated from here
+map.hpp:463:2: error: return-statement with no value, in function returning ‘cs540::Map<std::basic_string<char>, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::end() [with Key = std::basic_string<char>, Value = int]’:
+/usr/include/c++/4.6/bits/range_access.h:69:25:   instantiated from ‘decltype (__cont.end()) std::end(_Container&) [with _Container = cs540::Map<std::basic_string<char>, int>, decltype (__cont.end()) = cs540::Map<std::basic_string<char>, int>::Iterator]’
+general_test.cpp:110:24:   instantiated from here
+map.hpp:470:2: error: return-statement with no value, in function returning ‘cs540::Map<std::basic_string<char>, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&) [with Key = int, Value = int]’:
+map.hpp:394:28:   instantiated from ‘Value& cs540::Map<Key, Value>::at(const Key&) [with Key = int, Value = int]’
+general_test.cpp:138:28:   instantiated from here
+map.hpp:364:2: error: return-statement with no value, in function returning ‘cs540::Map<int, int>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const std::pair<const Key, Value>&) [with Key = int, Value = double]’:
+map.hpp:260:27:   instantiated from ‘cs540::Map<Key, Value>::Map(std::initializer_list<std::pair<const Key, Value> >) [with Key = int, Value = double]’
+general_test.cpp:149:75:   instantiated from here
+map.hpp:307:2: error: return-statement with no value, in function returning ‘cs540::Map<int, double>::Iterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::begin() const [with Key = int, Value = double]’:
+map.hpp:186:22:   instantiated from ‘cs540::Map<Key, Value>::Map(const cs540::Map<Key, Value>&) [with Key = int, Value = double, cs540::Map<Key, Value> = cs540::Map<int, double>]’
+general_test.cpp:152:56:   instantiated from here
+map.hpp:477:2: error: return-statement with no value, in function returning ‘cs540::Map<int, double>::ConstIterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::end() const [with Key = int, Value = double]’:
+map.hpp:187:20:   instantiated from ‘cs540::Map<Key, Value>::Map(const cs540::Map<Key, Value>&) [with Key = int, Value = double, cs540::Map<Key, Value> = cs540::Map<int, double>]’
+general_test.cpp:152:56:   instantiated from here
+map.hpp:484:2: error: return-statement with no value, in function returning ‘cs540::Map<int, double>::ConstIterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(const Key&, cs540::Map<Key, Value>::Node*) const [with Key = int, Value = long int]’:
+map.hpp:374:30:   instantiated from ‘cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(const Key&) const [with Key = int, Value = long int]’
+map.hpp:406:28:   instantiated from ‘const Value& cs540::Map<Key, Value>::at(const Key&) const [with Key = int, Value = long int]’
+general_test.cpp:78:16:   instantiated from here
+map.hpp:566:2: error: return-statement with no value, in function returning ‘cs540::Map<int, long int>::ConstIterator’ [-fpermissive]
+map.hpp: In member function ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&, cs540::Map<Key, Value>::Node*) [with Key = int, Value = int]’:
+map.hpp:362:30:   instantiated from ‘cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key&) [with Key = int, Value = int]’
+map.hpp:394:28:   instantiated from ‘Value& cs540::Map<Key, Value>::at(const Key&) [with Key = int, Value = int]’
+general_test.cpp:138:28:   instantiated from here
+map.hpp:549:2: error: return-statement with no value, in function returning ‘cs540::Map<int, int>::Iterator’ [-fpermissive]
+make: *** [general] Error 1

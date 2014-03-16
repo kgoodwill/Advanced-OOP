@@ -14,5 +14,8 @@ minimal:
 morse:
 	g++ $(CPPFLAGS) morseex.cpp -o morse.exe
 
+general:
+	g++ $(CPPFLAGS) general_test.cpp -o general.exe
+
 clean:
 	rm *.exe*

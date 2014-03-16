@@ -10,6 +10,7 @@
 #include <cassert>
 #include <stdio.h>
 #include <stdlib.h>
+#include <algorithm>
 
 namespace cs540{
 	template <typename Key, typename Value>
@@ -30,12 +31,12 @@ namespace cs540{
 					Node* prev; //DLL Previous
 					Node* next; //DLL Next
 
-					Node() : prev(nullptr), next(nullptr) {}
-					Node(std::pair<const Key, Value> n_value_in, Node* parentIn) : n_value(new std::pair<const Key, Value>(n_value_in)), left(nullptr), right(nullptr), parent(nullptr), prev(nullptr), next(nullptr){}
+					Node() : n_value(nullptr), left(nullptr), right(nullptr), parent(nullptr), prev(nullptr), next(nullptr) {}
+					Node(std::pair<const Key, Value> n_value_in, Node* parentIn) : n_value(new std::pair<const Key, Value>(n_value_in)), left(nullptr), right(nullptr), parent(parentIn), prev(nullptr), next(nullptr){}
 					Key key();
 					Value value();
-					Node *getBefore();
-					Node *getAfter();
+					Node *get_pred();
+					Node *get_succ();
 					~Node();
 			};
 			Node* head;
@@ -47,6 +48,7 @@ namespace cs540{
 		public:
 			class Iterator{
 				public:
+					Iterator(Node* node) : current(node){}
 					Iterator(const Iterator&);
 					Iterator& operator=(const Iterator&);
 					Iterator(Iterator&&);
@@ -66,6 +68,7 @@ namespace cs540{
 			};
 			class ConstIterator{
 			public:
+				ConstIterator(Node* node) : current(node){}
 				ConstIterator(const ConstIterator&);
 				ConstIterator& operator=(const ConstIterator&);
 				ConstIterator(ConstIterator&&);
@@ -86,6 +89,7 @@ namespace cs540{
 			};
 			class ReverseIterator{
 			public:
+				ReverseIterator(Node* node) : current(node){}
 				ReverseIterator(const ReverseIterator&);
 				ReverseIterator& operator=(const ReverseIterator&);
 				ReverseIterator(ReverseIterator&&);
@@ -175,7 +179,7 @@ cs540::Map<Key, Value>::Map() : head(nullptr), tail(new Map<Key, Value>::Node())
  *Makes a copy of the existing instance passed to it
 */
 template <typename Key, typename Value>
-cs540::Map<Key, Value>::Map(const Map& map2) : Map(){
+cs540::Map<Key, Value>::Map(const Map& map2){
 	//Create a new Map
 	//Finds all of the nodes in it and creates copies of them
 	//	Calls the node copy constructor, which should maintain all Node* ptrs
@@ -231,7 +235,7 @@ cs540::Map<Key, Value>::Map(Map&& map2){
 	head = map2.head;
 	tail = map2.tail;
 	m_size = map2.m_size;
-	map2.root = nullptr;
+	map2.head = nullptr;
 	map2.tail = nullptr;
 	map2.m_size = 0;
 }
@@ -239,7 +243,7 @@ cs540::Map<Key, Value>::Map(Map&& map2){
 //Move Assignment
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Map& cs540::Map<Key, Value>::operator=(Map&& map2){
-	if(*this == *map2){
+	if(*this == map2){
 		return *this;
 	}
 	this->clear();
@@ -269,9 +273,9 @@ cs540::Map<Key, Value>::~Map(){
 //	Returns an iterator to the inserted node
 template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pair<const Key, Value>&& n_value_in){
+	Node* newNode = new Node(n_value_in, nullptr);
 	if(head){
-		Node* newNode = new Node(n_value_in, nullptr);
-		return this->insert(head, n_value_in);
+		return this->insert(newNode, head);
 	}
 	else{
 		head = new Node(n_value_in, nullptr);
@@ -282,6 +286,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pa
 		m_size++;
 		return Map<Key, Value>::Iterator(head);
 	}
+	return Map<Key, Value>::Iterator(newNode);
 }
 
 //Constant Insert
@@ -290,7 +295,7 @@ template <typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const std::pair<const Key, Value>& n_value_in){
 	if(head){
 		Node* newNode = new Node(n_value_in, nullptr);
-		return this->insert(head, newNode);
+		return this->insert(newNode, head);
 	}
 	else{
 		head = new Node(n_value_in, nullptr);
@@ -301,6 +306,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const s
 		m_size++;
 		return Map<Key, Value>::Iterator(head);
 	}
+	return nullptr;
 }
 
 template<typename Key, typename Value>
@@ -316,7 +322,7 @@ void cs540::Map<Key, Value>::erase(Map<Key, Value>::Iterator iter){
 		this->replace(iter.current, iter.current->right);
 	}
 	else if(!iter.current->right){
-		this->replace(iter.current, iter->current->left);
+		this->replace(iter.current, iter.current->left);
 	}
 	else{
 		Node* node = iter.current->right;
@@ -357,6 +363,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key
 	else{
 		return find(searchKey, head);
 	}
+	return Map<Key, Value>::Iterator(head);
 }
 
 template<typename Key, typename Value>
@@ -368,6 +375,7 @@ typename cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(cons
 	else{
 		return find(searchKey, head);
 	}
+	return Map<Key, Value>::Iterator(head);
 }
 
 template<typename Key, typename Value>
@@ -454,36 +462,42 @@ template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::begin(){
 	//Return an iterator to the beginning of the map
 	return Map<Key, Value>::Iterator(tail->next);
+	return nullptr;
 }
 
 template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::end(){
 	//Return an iterator to the end of the map
 	return Map<Key, Value>::Iterator(tail);
+	return nullptr;
 }
 
 template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::begin() const{
 	//Same as regular begin but const
 	return Map<Key, Value>::ConstIterator(tail->next);
+	return nullptr;
 }
 
 template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::end() const{
 	//Same as regular end but const
 	return Map<Key, Value>::ConstIterator(tail);
+	return nullptr;
 }
 
 template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::ReverseIterator cs540::Map<Key, Value>::rbegin(){
 	//Returns an iterator to the beginning of the map, going in the opposite direction
 	return Map<Key, Value>::ReverseIterator(tail->prev);
+	return nullptr;
 }
 
 template<typename Key, typename Value>
 typename cs540::Map<Key, Value>::ReverseIterator cs540::Map<Key, Value>::rend(){
 	//Returns an iterator to the end of the map
 	return Map<Key, Value>::ReverseIterator(tail);
+	return nullptr;
 }
 
 /*Private Functions for Map Class*/
@@ -534,6 +548,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::find(const Key
 	else{
 		return find(searchKey, node->left);
 	}
+	return nullptr;
 }
 
 template<typename Key, typename Value>
@@ -550,6 +565,7 @@ typename cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(cons
 	else{
 		return find(searchKey, node->left);
 	}
+	return nullptr;
 }
 
 template<typename Key, typename Value>
@@ -737,7 +753,7 @@ Value cs540::Map<Key, Value>::Node::value(){
 }
 
 template<typename Key, typename Value>
-typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::getBefore(){
+typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::get_pred(){
 	Node* returnNode;
 	if(this->left){
 		returnNode = this->left;
@@ -761,7 +777,7 @@ typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::getBefore()
 }
 
 template<typename Key, typename Value>
-typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::getAfter(){
+typename cs540::Map<Key, Value>::Node* cs540::Map<Key, Value>::Node::get_succ(){
 	Node* returnNode;
 	if(this->right){
 		returnNode = this->right;

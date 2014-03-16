@@ -279,6 +279,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(std::pa
 		m_size++;
 		return Map<Key, Value>::Iterator(head);
 	}
+	return -1;
 }
 
 //Constant Insert
@@ -298,6 +299,7 @@ typename cs540::Map<Key, Value>::Iterator cs540::Map<Key, Value>::insert(const s
 		m_size++;
 		return Map<Key, Value>::Iterator(head);
 	}
+	return -1;
 }
 
 template<typename Key, typename Value>
@@ -547,6 +549,7 @@ typename cs540::Map<Key, Value>::ConstIterator cs540::Map<Key, Value>::find(cons
 	else{
 		return find(searchKey, node->left);
 	}
+	return -1;
 }
 
 template<typename Key, typename Value>
