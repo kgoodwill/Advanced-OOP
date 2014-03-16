@@ -1,4 +1,4 @@
-CPPFLAGS = -g -Wall -Wextra -pedantic -std=c++11
+CPPFLAGS = -g -Wall -Wextra -pedantic -std=c++0x
 
 all: ryan ken chaoren minimal morse
 
